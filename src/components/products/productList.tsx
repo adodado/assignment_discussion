@@ -2,6 +2,7 @@ import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import useReduxProducts from "../../hooks/useReduxProducts";
+import useReduxArticles from "../../hooks/useReduxArticles";
 import Product from "./product";
 import { IProduct } from "../../reducers/productReducer";
 import CircularProgress from "@material-ui/core/CircularProgress";
@@ -19,6 +20,7 @@ const useStyles = makeStyles((theme) => ({
 const ProductList = () => {
   const classes = useStyles();
   const { products, getAllProducts } = useReduxProducts();
+  const { articles } = useReduxArticles();
 
   React.useEffect(() => {
     if (products === undefined || products.length === 0) {
@@ -28,7 +30,10 @@ const ProductList = () => {
 
   return (
     <div style={{ display: "flex", justifyContent: "center" }}>
-      {products === undefined || products.length === 0 ? (
+      {products === undefined ||
+      products.length === 0 ||
+      articles === undefined ||
+      articles.length === 0 ? (
         <CircularProgress size={100} style={{ marginTop: 100 }} />
       ) : (
         <Grid
@@ -43,6 +48,7 @@ const ProductList = () => {
                 id={product.id}
                 name={product.name}
                 productArticles={product.articles}
+                articles={articles}
               />
             </Grid>
           ))}

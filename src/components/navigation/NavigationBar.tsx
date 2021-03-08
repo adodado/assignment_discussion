@@ -4,8 +4,9 @@ import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
 import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
 import { NavLink } from "react-router-dom";
-import { Hidden } from "@material-ui/core";
+import { Hidden, Typography } from "@material-ui/core";
 import { useHistory } from "react-router";
+import useReduxCart from "../../hooks/useReduxCart";
 
 const useStyles = makeStyles((theme) => ({
   navigationContainer: {
@@ -67,20 +68,11 @@ const useStyles = makeStyles((theme) => ({
     color: theme.palette.common.black,
   },
   dot: {
-    position: "absolute",
-    top: 0,
-    right: 0,
-    backgroundColor: theme.palette.info.dark,
-    borderRadius: "50%",
-    width: "18px",
-    height: "18px",
     display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
   },
   cartItemText: {
-    color: theme.palette.common.white,
-    fontSize: "14",
+    color: theme.palette.common.black,
+    fontSize: "14px",
     fontWeight: "bold",
   },
   menuButton: {
@@ -96,6 +88,7 @@ type NavigationBarProps = {
 const NavigationBar: FC<NavigationBarProps> = ({ onMenuClickHandler }) => {
   const classes = useStyles();
   const history = useHistory();
+  const { cart } = useReduxCart();
 
   return (
     <div className={classes.navigationContainer}>
@@ -110,6 +103,14 @@ const NavigationBar: FC<NavigationBarProps> = ({ onMenuClickHandler }) => {
           <NavLink to="/checkout" className={classes.navLink}>
             Checkout
           </NavLink>
+        </div>
+        <div className={classes.dot}>
+          <ShoppingCartIcon className={classes.icon} />
+          <div>
+            <Typography variant="h6" className={classes.cartItemText}>
+              {cart !== undefined && cart.length !== 0 ? cart.length : 0}
+            </Typography>
+          </div>
         </div>
       </div>
       <div className={classes.rightContainer}>

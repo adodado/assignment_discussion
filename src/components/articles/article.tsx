@@ -2,6 +2,7 @@ import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
+import CardMedia from "@material-ui/core/CardMedia";
 import { Typography } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
@@ -15,7 +16,7 @@ const useStyles = makeStyles((theme) => ({
   },
 
   cardContent: {
-    marginBottom: "60px",
+    marginBottom: "20px",
     background: "#003399",
     color: "white",
   },
@@ -58,13 +59,20 @@ const useStyles = makeStyles((theme) => ({
 type ArticleProps = {
   id: string;
   name?: string;
+  amountInStock?: number;
 };
 
-const Article: React.FC<ArticleProps> = ({ id, name }) => {
+const Article: React.FC<ArticleProps> = ({ id, name, amountInStock }) => {
   const classes = useStyles({});
 
   return (
     <Card className={classes.root}>
+      <CardMedia
+        className={classes.media}
+        image="/images/product-placeholder.jpg"
+        title={name}
+        component="img"
+      />
       <CardContent className={classes.cardContent}>
         <div style={{ width: "100%" }}>
           <div className={classes.row}>
@@ -78,6 +86,14 @@ const Article: React.FC<ArticleProps> = ({ id, name }) => {
           </div>
         </div>
       </CardContent>
+      <Typography
+        variant="button"
+        component="h3"
+        className={classes.h3ResponsiveText}
+        style={{ marginLeft: "10px" }}
+      >
+        Available Qty: {amountInStock}
+      </Typography>
     </Card>
   );
 };

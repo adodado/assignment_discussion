@@ -3,6 +3,7 @@ import CartItemCard from "./cartItem";
 import { Container, Grid, makeStyles, Typography } from "@material-ui/core";
 import SaleSummary from "./saleSummary";
 import useReduxCart from "../../hooks/useReduxCart";
+import useReduxArticles from "../../hooks/useReduxArticles";
 import { IProduct } from "../../reducers/productReducer";
 
 const useStyles = makeStyles((theme) => ({
@@ -27,6 +28,7 @@ const useStyles = makeStyles((theme) => ({
 const CartItemList = () => {
   const classes = useStyles();
   const { cart } = useReduxCart();
+  const { articles } = useReduxArticles();
 
   return (
     <>
@@ -34,13 +36,17 @@ const CartItemList = () => {
         <div className={classes.container}>
           <Container className={classes.root}>
             <Typography variant="h6" component="h6" className={classes.heading}>
-              Your cart
+              Your basket
             </Typography>
 
             <Grid container spacing={4}>
               <Grid item xs={12} md={8} style={{ padding: 10 }}>
                 {cart.map((product: IProduct) => (
-                  <CartItemCard key={product.id} product={product} />
+                  <CartItemCard
+                    key={product.id}
+                    product={product}
+                    articles={articles}
+                  />
                 ))}
               </Grid>
               <Grid item xs={12} md={4} style={{ padding: 10 }}>
@@ -56,7 +62,7 @@ const CartItemList = () => {
             variant="body1"
             component="p"
           >
-            Cart is empty
+            Basket is empty
           </Typography>
         </div>
       )}

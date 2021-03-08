@@ -2,6 +2,7 @@ import React from "react";
 import Grid from "@material-ui/core/Grid";
 import { Typography, Button } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
+import useReduxCart from "../../hooks/useReduxCart";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -34,8 +35,7 @@ const useStyles = makeStyles((theme) => ({
 
 const SaleSummary = () => {
   const classes = useStyles();
-  let numOfItems = 0;
-  let totalPrice = 0;
+  const { cart } = useReduxCart();
 
   const handleCheckout = () => {
     //TODO: Write hook for sale checkout.
@@ -46,16 +46,13 @@ const SaleSummary = () => {
       <Grid container className={classes.root}>
         <Grid item xs={12}>
           <Typography variant="h6" className={classes.heading}>
-            Sale Summary
+            Order Summary
           </Typography>
         </Grid>
         <Grid item xs={12} className={classes.row}>
-          <Typography variant="button">{numOfItems} items</Typography>
-          <Typography variant="button">{totalPrice}</Typography>
-        </Grid>
-        <Grid item xs={12} className={classes.row}>
-          <Typography variant="button">Total</Typography>
-          <Typography variant="button">{totalPrice}</Typography>
+          <Typography variant="button">
+            {cart !== undefined && cart.length !== 0 ? cart.length : 0} Products
+          </Typography>
         </Grid>
       </Grid>
       <Button
@@ -65,7 +62,7 @@ const SaleSummary = () => {
         fullWidth
         onClick={handleCheckout}
       >
-        Checkout
+        Complete
       </Button>
     </>
   );

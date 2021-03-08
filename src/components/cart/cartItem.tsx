@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React from "react";
 import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
 import CardMedia from "@material-ui/core/CardMedia";
@@ -6,7 +6,9 @@ import { makeStyles } from "@material-ui/core/styles";
 import CancelIcon from "@material-ui/icons/Cancel";
 import IconButton from "@material-ui/core/IconButton";
 import useReduxCart from "../../hooks/useReduxCart";
+import clsx from "clsx";
 import { IProduct } from "../../reducers/productReducer";
+import { IArticle } from "../../reducers/articleReducer";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -15,11 +17,9 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: "5px",
     border: `1px solid ${theme.palette.common.black}`,
     position: "relative",
-    backgroundColor: "#64B5F7",
-
+    backgroundColor: theme.palette.background.default,
     [theme.breakpoints.only("xs")]: {
       border: "none",
-      backgroundColor: theme.palette.background.default,
       minHeight: 150,
     },
   },
@@ -64,9 +64,10 @@ const useStyles = makeStyles((theme) => ({
 
 type CartItemProps = {
   product: IProduct;
+  articles: IArticle[];
 };
 
-const CartItems: FC<CartItemProps> = ({ product }) => {
+const CartItems: React.FC<CartItemProps> = ({ product, articles }) => {
   const classes = useStyles();
   const { removeProduct } = useReduxCart();
 
@@ -88,6 +89,7 @@ const CartItems: FC<CartItemProps> = ({ product }) => {
           className={classes.media}
           title={product.name}
           component="img"
+          image="/images/product-placeholder.jpg"
         />
       </Grid>
 
@@ -99,8 +101,32 @@ const CartItems: FC<CartItemProps> = ({ product }) => {
             color="textSecondary"
             className={classes.responsiveText}
           >
-            NAME: {product.name}
+            Product: {product.name}
           </Typography>
+          {product.articles.map((article) => (
+            <div key={article.id} style={{ display: "flex" }}>
+              <Typography
+                variant="button"
+                component="h3"
+                className={classes.responsiveText}
+                style={{ minWidth: 200 }}
+              >
+                {
+                  articles!.find(
+                    (item: { id: string }) => item.id === article.id
+                  )!.name
+                }
+              </Typography>
+              <Typography
+                variant="button"
+                component="h3"
+                className={clsx(classes.responsiveText)}
+                align="right"
+              >
+                Qty:{article.amountRequired}
+              </Typography>
+            </div>
+          ))}
         </div>
       </Grid>
     </Grid>

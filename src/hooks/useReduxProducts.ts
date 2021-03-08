@@ -1,4 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux'
+import { getAllArticlesCreator } from '../actions/ArticleActions'
 import { getAllProductsCreator } from '../actions/ProductActions'
 import { IAppState } from '../store/Store'
 
@@ -8,7 +9,8 @@ const useReduxProducts = () => {
 		(state: IAppState) => state.productState
 	)
 	const getAllProducts = () => {
-		dispatch(getAllProductsCreator())
+		dispatch(getAllArticlesCreator());
+		dispatch(getAllProductsCreator());
     }
 	return {products, getAllProducts};
 }

@@ -21,6 +21,7 @@ const ArticlesList = () => {
   const { articles, getAllArticles } = useReduxArticles();
 
   React.useEffect(() => {
+    console.log(articles);
     if (articles === undefined || articles.length === 0) {
       getAllArticles();
     }
@@ -39,7 +40,11 @@ const ArticlesList = () => {
         >
           {articles.map((article: IArticle) => (
             <Grid key={article.id} item xs={6} sm={4} md={3}>
-              <Article id={article.id} name={article.name} />
+              <Article
+                id={article.id}
+                name={article.name}
+                amountInStock={article.amountInStock}
+              />
             </Grid>
           ))}
         </Grid>

@@ -24,8 +24,8 @@ const store = configureStore();
 const routing = (
   <>
     <Router>
-      <Navigation />
       <Provider store={store}>
+        <Navigation />
         <div className="page">
           <Switch>
             <Route exact path="/" component={ProductsPage} />

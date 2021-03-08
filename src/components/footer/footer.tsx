@@ -4,16 +4,15 @@ import React from "react";
 const useStyles = makeStyles((theme) => ({
   footer: {
     width: "100%",
-    height: "4.5rem",
-    backgroundColor: theme.palette.info.light,
+    height: "1rem",
 
     "& p": {
-      color: "black",
-      fontSize: "19px",
+      color: theme.typography.body2.color,
+      fontSize: "12px",
       fontWeight: "bold",
       textAlign: "center",
       textTransform: "capitalize",
-      lineHeight: "4.5rem",
+      lineHeight: "1rem",
     },
   },
 }));
@@ -22,7 +21,7 @@ const Footer = () => {
   const classes = useStyles();
   return (
     <footer className={classes.footer}>
-      <p>TODO: DECIDE IF GOING TO USE FOOTER!!!</p>
+      <p>Copyright © 2021</p>
     </footer>
   );
 };

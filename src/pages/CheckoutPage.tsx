@@ -1,7 +1,7 @@
 import React from "react";
+import CheckoutItemList from "../components/cart";
 
 const CheckoutPage = () => {
-  return <></>;
+  return <CheckoutItemList />;
 };
-
 export default CheckoutPage;

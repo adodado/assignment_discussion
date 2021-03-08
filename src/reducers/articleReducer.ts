@@ -3,6 +3,8 @@ import { ArticleActions, ArticleActionTypes } from "../actions/ArticleActions";
 
 export interface IArticle {
   id: string;
+  name: string;
+  amountInStock: number;
 }
 
 export interface IArticleState {

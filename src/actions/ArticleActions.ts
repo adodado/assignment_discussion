@@ -21,14 +21,14 @@ export interface IArticleGetByIdAction {
 
 export type ArticleActions = IArticleGetAllAction | IArticleGetByIdAction;
 
-export const getAllArticles: ActionCreator<
+export const getAllArticlesCreator: ActionCreator<
   ThunkAction<Promise<any>, IArticleState, null, IArticleGetAllAction>
 > = () => {
   return async (dispatch: Dispatch) => {
     try {
-      const response = await axios.get("");
+      const response = await axios.get("http://localhost:7000/articles/");
       dispatch({
-        articles: response.data.results,
+        articles: response.data,
         type: ArticleActionTypes.GET_ALL,
       });
     } catch (err) {
@@ -37,14 +37,14 @@ export const getAllArticles: ActionCreator<
   };
 };
 
-export const getArticlesById: ActionCreator<
+export const getArticlesByIdCreator: ActionCreator<
   ThunkAction<Promise<any>, IArticleState, null, IArticleGetByIdAction>
 > = (id: string) => {
   return async (dispatch: Dispatch) => {
     try {
-      const response = await axios.get("");
+      const response = await axios.get("http://localhost:7000/articles/"+id);
       dispatch({
-        articles: response.data.results,
+        articles: response.data,
         type: ArticleActionTypes.GET_BY_ID,
       });
     } catch (err) {

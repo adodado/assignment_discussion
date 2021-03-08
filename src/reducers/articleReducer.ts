@@ -3,15 +3,16 @@ import { ArticleActions, ArticleActionTypes } from "../actions/ArticleActions";
 
 export interface IArticle {
   id: string;
-  name: string;
-  amountInStock: number;
+  name?: string;
+  amountInStock?: number;
+  amountRequired?: number;
 }
 
 export interface IArticleState {
   readonly articles: IArticle[];
 }
 
-const initialArticlesState: IArticleState = {
+export const initialArticlesState: IArticleState = {
   articles: [],
 };
 
@@ -20,13 +21,7 @@ export const articleReducer: Reducer<IArticleState, ArticleActions> = (
   action
 ) => {
   switch (action.type) {
-    case ArticleActionTypes.GET_BY_ID: {
-      return {
-        ...state,
-        articles: action.articles,
-      };
-    }
-    case ArticleActionTypes.GET_ALL: {
+    case ArticleActionTypes.GET_ALL_ARTICLES: {
       return {
         ...state,
         articles: action.articles,

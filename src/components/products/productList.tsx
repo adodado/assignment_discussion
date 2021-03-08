@@ -24,12 +24,12 @@ const ProductList = () => {
     if (products === undefined || products.length === 0) {
       getAllProducts();
     }
-  }, [products, getAllProducts]);
+  }, [getAllProducts, products]);
 
   return (
     <div style={{ display: "flex", justifyContent: "center" }}>
       {products === undefined || products.length === 0 ? (
-        <CircularProgress size={80} style={{ marginTop: 100 }} />
+        <CircularProgress size={100} style={{ marginTop: 100 }} />
       ) : (
         <Grid
           container
@@ -39,7 +39,11 @@ const ProductList = () => {
         >
           {products.map((product: IProduct) => (
             <Grid key={product.id} item xs={6} sm={4} md={3}>
-              <Product id={product.id} name={product.name} />
+              <Product
+                id={product.id}
+                name={product.name}
+                productArticles={product.articles}
+              />
             </Grid>
           ))}
         </Grid>

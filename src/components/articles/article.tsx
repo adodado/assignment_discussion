@@ -57,7 +57,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 type ArticleProps = {
   id: string;
-  name: string;
+  name?: string;
 };
 
 const Article: React.FC<ArticleProps> = ({ id, name }) => {

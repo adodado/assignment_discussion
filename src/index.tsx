@@ -4,7 +4,6 @@ import "./index.css";
 import * as serviceWorker from "./serviceWorker";
 import configureStore from "./store/Store";
 import { Provider } from "react-redux";
-import { getAllProductsCreator } from "./actions/ProductActions";
 import {
   Redirect,
   Route,
@@ -21,7 +20,6 @@ import Navigation from "./components/navigation";
 
 // Generate the initial store
 const store = configureStore();
-store.dispatch(getAllProductsCreator());
 
 const routing = (
   <>

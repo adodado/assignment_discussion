@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux'
-import { getAllProductsCreator, getProductByIdCreator } from '../actions/ProductActions'
+import { getAllProductsCreator } from '../actions/ProductActions'
 import { IAppState } from '../store/Store'
 
 const useReduxProducts = () => {
@@ -10,10 +10,7 @@ const useReduxProducts = () => {
 	const getAllProducts = () => {
 		dispatch(getAllProductsCreator())
     }
-    const getProductById= (id: string) => {
-		dispatch(getProductByIdCreator(id))
-    }
-	return {products, getAllProducts, getProductById};
+	return {products, getAllProducts};
 }
 
 export default useReduxProducts

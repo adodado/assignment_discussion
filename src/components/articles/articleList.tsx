@@ -26,29 +26,25 @@ const ArticlesList = () => {
     }
   }, [articles, getAllArticles]);
 
-  if (articles === undefined) {
-    return <></>;
-  } else {
-    return (
-      <div style={{ display: "flex", justifyContent: "center" }}>
-        {articles === undefined || articles.length === 0 ? (
-          <CircularProgress size={80} style={{ marginTop: 100 }} />
-        ) : (
-          <Grid
-            container
-            spacing={4}
-            data-testid="container"
-            className={classes.root}
-          >
-            {articles.map((article: IArticle) => (
-              <Grid key={article.id} item xs={6} sm={4} md={3}>
-                <Article id={article.id} name={article.name} />
-              </Grid>
-            ))}
-          </Grid>
-        )}
-      </div>
-    );
-  }
+  return (
+    <div style={{ display: "flex", justifyContent: "center" }}>
+      {articles === undefined || articles.length === 0 ? (
+        <CircularProgress size={100} style={{ marginTop: 100 }} />
+      ) : (
+        <Grid
+          container
+          spacing={4}
+          data-testid="container"
+          className={classes.root}
+        >
+          {articles.map((article: IArticle) => (
+            <Grid key={article.id} item xs={6} sm={4} md={3}>
+              <Article id={article.id} name={article.name} />
+            </Grid>
+          ))}
+        </Grid>
+      )}
+    </div>
+  );
 };
 export default ArticlesList;

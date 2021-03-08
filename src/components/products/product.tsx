@@ -2,8 +2,13 @@ import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
-import { Typography, Button } from "@material-ui/core";
+import { Typography, Button, IconButton } from "@material-ui/core";
 import { useHistory } from "react-router-dom";
+import AddShoppingCartIcon from "@material-ui/icons/AddShoppingCart";
+import useReduxCart from "../../hooks/useReduxCart";
+import clsx from "clsx";
+import { IProductArticle } from "../../reducers/productReducer";
+import useReduxArticles from "../../hooks/useReduxArticles";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -62,14 +67,20 @@ const useStyles = makeStyles((theme) => ({
 type ProductProps = {
   id: string;
   name: string;
+  productArticles: IProductArticle[];
 };
 
-const Product: React.FC<ProductProps> = ({ id, name }) => {
-  const classes = useStyles({});
+const Product: React.FC<ProductProps> = ({ id, name, productArticles }) => {
+  const classes = useStyles();
   const history = useHistory();
+  const { addProduct } = useReduxCart();
+  const { articles } = useReduxArticles();
 
   const handleClick = () => {
     history.push(`/details/${id}`);
+  };
+  const onClickHandler = () => {
+    addProduct({ id: id, name: name, articles: productArticles });
   };
 
   return (
@@ -84,6 +95,37 @@ const Product: React.FC<ProductProps> = ({ id, name }) => {
             >
               {name}
             </Typography>
+          </div>
+          <div className={classes.row} style={{ alignItems: "center" }}>
+            {productArticles.map((article) => (
+              <div key={article.id}>
+                <Typography
+                  variant="button"
+                  component="h3"
+                  className={classes.h3ResponsiveText}
+                >
+                  {console.log(articles)}
+
+                  {articles !== undefined && articles.length !== 0
+                    ? articles!.find(
+                        (item: { id: string }) => item.id === article.id
+                      )!.name
+                    : null}
+                </Typography>
+
+                <Typography
+                  variant="button"
+                  component="h3"
+                  className={clsx(classes.h3ResponsiveText)}
+                  align="right"
+                >
+                  Qty:{article.amountRequired}
+                </Typography>
+              </div>
+            ))}
+            <IconButton color="inherit" onClick={onClickHandler} size="medium">
+              <AddShoppingCartIcon />
+            </IconButton>
           </div>
         </div>
       </CardContent>

@@ -15,13 +15,13 @@ export const cartReducer: Reducer<ICartState, CartActions> = (
   action
 ) => {
   switch (action.type) {
-    case CartActionTypes.ADD_PRODUCT: {
+    case CartActionTypes.ADD_PRODUCT_TO_CART: {
       return {
         ...state,
         cart: action.cart,
       };
     }
-    case CartActionTypes.REMOVE_PRODUCT: {
+    case CartActionTypes.REMOVE_PRODUCT_FROM_CART: {
       return {
         ...state,
         cart: action.cart,

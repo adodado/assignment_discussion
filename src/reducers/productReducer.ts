@@ -1,7 +1,7 @@
 import { Reducer } from "redux";
 import { ProductActions, ProductActionTypes } from "../actions/ProductActions";
 
-interface IArticle {
+export interface IProductArticle {
   id: string;
   amountRequired: number;
 }
@@ -9,17 +9,15 @@ interface IArticle {
 export interface IProduct {
     id: string;
     name: string;
-    articles: IArticle[];
+    articles: IProductArticle[];
 }
 
 export interface IProductState {
   readonly products: IProduct[];
-  readonly current: IProduct | null;
 }
 
-const initialProductState: IProductState = {
+export const initialProductState: IProductState = {
   products: [],
-  current: null,
 };
 
 export const productReducer: Reducer<IProductState, ProductActions> = (
@@ -27,16 +25,10 @@ export const productReducer: Reducer<IProductState, ProductActions> = (
   action
 ) => {
   switch (action.type) {
-    case ProductActionTypes.GET_ALL: {
+    case ProductActionTypes.GET_ALL_PRODUCTS: {
       return {
         ...state,
         products: action.products,
-      };
-    }
-    case ProductActionTypes.GET_BY_ID: {
-      return {
-        ...state,
-        current: action.current,
       };
     }
     default:

@@ -27,6 +27,12 @@ export const cartReducer: Reducer<ICartState, CartActions> = (
         cart: action.cart,
       };
     }
+    case CartActionTypes.CLEAR_CART: {
+      return {
+        ...state,
+        cart: action.cart,
+      };
+    }
     default:
       return state;
   }

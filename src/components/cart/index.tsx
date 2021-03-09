@@ -16,7 +16,6 @@ const useStyles = makeStyles((theme) => ({
   },
   heading: {
     textTransform: "uppercase",
-    fontWeight: "bold",
     marginTop: theme.spacing(4),
   },
 
@@ -24,6 +23,14 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: theme.spacing(4),
   },
 }));
+
+function uuidv4() {
+  return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, function (c) {
+    var r = (Math.random() * 16) | 0,
+      v = c === "x" ? r : (r & 0x3) | 0x8;
+    return v.toString(16);
+  });
+}
 
 const CartItemList = () => {
   const classes = useStyles();
@@ -43,7 +50,7 @@ const CartItemList = () => {
               <Grid item xs={12} md={8} style={{ padding: 10 }}>
                 {cart.map((product: IProduct) => (
                   <CartItemCard
-                    key={product.id}
+                    key={uuidv4()}
                     product={product}
                     articles={articles}
                   />
@@ -56,7 +63,7 @@ const CartItemList = () => {
           </Container>
         </div>
       ) : (
-        <div style={{ textAlign: "center" }}>
+        <div style={{ textAlign: "center", marginTop: "50px" }}>
           <Typography
             style={{ fontWeight: "bold", fontSize: "25px" }}
             variant="body1"

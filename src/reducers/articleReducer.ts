@@ -3,9 +3,8 @@ import { ArticleActions, ArticleActionTypes } from "../actions/ArticleActions";
 
 export interface IArticle {
   id: string;
-  name?: string;
-  amountInStock?: number;
-  amountRequired?: number;
+  name: string;
+  amountInStock: number;
 }
 
 export interface IArticleState {
@@ -22,6 +21,12 @@ export const articleReducer: Reducer<IArticleState, ArticleActions> = (
 ) => {
   switch (action.type) {
     case ArticleActionTypes.GET_ALL_ARTICLES: {
+      return {
+        ...state,
+        articles: action.articles,
+      };
+    }
+    case ArticleActionTypes.SET_ARTICLES: {
       return {
         ...state,
         articles: action.articles,

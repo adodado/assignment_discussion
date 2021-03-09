@@ -4,6 +4,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import AddShoppingCartIcon from "@material-ui/icons/AddShoppingCart";
 import useReduxProducts from "../../hooks/useReduxProducts";
 import useReduxCart from "../../hooks/useReduxCart";
+import useReduxArticles from "../../hooks/useReduxArticles";
 
 const useStyles = makeStyles((theme) => ({
   contentWrapper: {
@@ -23,10 +24,11 @@ const useStyles = makeStyles((theme) => ({
   },
   button: {
     marginTop: theme.spacing(5),
-    backgroundColor: "#64B5F7",
-
+    backgroundColor: "#003399",
+    color: theme.palette.common.white,
+    height: 40,
     "&:hover": {
-      backgroundColor: theme.palette.info.main,
+      backgroundColor: "#002369",
     },
   },
   name: {
@@ -40,6 +42,8 @@ const ProductDetails = (props: any) => {
   const classes = useStyles();
   const { products } = useReduxProducts();
   const { addProduct } = useReduxCart();
+  const { articles } = useReduxArticles();
+
   const product = products.find((p) => p.id === props.id);
   if (!product) return <p>Product not found</p>;
 
@@ -50,7 +54,18 @@ const ProductDetails = (props: any) => {
   return (
     <div className={classes.contentWrapper}>
       <Container className={classes.container}>
-        <Grid container spacing={3}>
+        <Grid
+          container
+          spacing={3}
+          style={{ display: "flex", flexFlow: "row" }}
+        >
+          <Grid item xs={12} md={6}>
+            <img
+              className={classes.image}
+              src="/images/product-placeholder.jpg"
+              alt={product.name}
+            />
+          </Grid>
           <Grid item xs={12} md={12} container direction="column">
             <Grid item>
               <Typography variant="h4" className={classes.name}>
@@ -64,14 +79,26 @@ const ProductDetails = (props: any) => {
               spacing={1}
               style={{ marginTop: 20 }}
             >
-              <Grid item xs={6}>
-                <Typography variant="button"></Typography>
-              </Grid>
-              <Grid item xs={6} style={{ textAlign: "justify" }}>
-                <Typography variant="button"></Typography>
-              </Grid>
+              {product.articles.map((article) => (
+                <div key={article.id} style={{ width: "200px" }}>
+                  <Grid item xs={6}>
+                    <Typography variant="button">
+                      {
+                        articles!.find(
+                          (item: { id: string }) => item.id === article.id
+                        )!.name
+                      }
+                    </Typography>
+                  </Grid>
+                  <Grid item xs={6}>
+                    <Typography variant="button">
+                      Qty:{article.amountRequired}
+                    </Typography>
+                  </Grid>
+                </div>
+              ))}
             </Grid>
-            <Grid item container>
+            <Grid item container xs={12} md={6} style={{ margin: "0 auto" }}>
               <Button
                 variant="contained"
                 className={classes.button}

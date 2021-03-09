@@ -6,7 +6,7 @@ import { IProduct } from "../reducers/productReducer";
 export enum CartActionTypes {
   ADD_PRODUCT_TO_CART = "ADD_PRODUCT_TO_CART",
   REMOVE_PRODUCT_FROM_CART = "ADD_PRODUCT_TO_CART",
-  GET_ALL_IN_CART = "GET_ALL_IN_CART",
+  CLEAR_CART = "CLEAR_CART",
 }
 
 export interface ICartAddProductAction {
@@ -17,7 +17,11 @@ export interface ICartRemoveProductAction {
   type: CartActionTypes.REMOVE_PRODUCT_FROM_CART;
   cart: IProduct[];
 }
-export type CartActions = ICartAddProductAction | ICartRemoveProductAction;
+export interface IClearCartAction {
+  type: CartActionTypes.CLEAR_CART;
+  cart: IProduct[];
+}
+export type CartActions = ICartAddProductAction | ICartRemoveProductAction | IClearCartAction;
 
 export const addProductToCartCreator: ActionCreator<
   ThunkAction<any, ICartState, null, ICartAddProductAction>
@@ -42,6 +46,21 @@ export const removeProductFromCartCreator: ActionCreator<
       dispatch({
         cart,
         type: CartActionTypes.REMOVE_PRODUCT_FROM_CART,
+      });
+    } catch (err) {
+      console.error(err);
+    }
+  };
+};
+
+export const clearCartCreator: ActionCreator<
+  ThunkAction<any, ICartState, null, IClearCartAction>
+> = () => {
+  return async (dispatch: Dispatch) => {
+    try {
+      dispatch({
+        cart: [],
+        type: CartActionTypes.CLEAR_CART,
       });
     } catch (err) {
       console.error(err);

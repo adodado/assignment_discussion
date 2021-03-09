@@ -1,5 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux'
-import { getAllArticlesCreator } from '../actions/ArticleActions'
+import { getAllArticlesCreator, setArticlesCreator} from '../actions/ArticleActions'
+import { IArticle } from '../reducers/articleReducer'
 import { IAppState } from '../store/Store'
 
 const useReduxArticles = () => {
@@ -10,7 +11,10 @@ const useReduxArticles = () => {
 	function getAllArticles() {
 		dispatch(getAllArticlesCreator());
 	}
-	return {articles, getAllArticles};
+	function setArticles(articles: IArticle[]) {
+		dispatch(setArticlesCreator(articles));
+	}
+	return {articles, getAllArticles, setArticles};
 }
 
 export default useReduxArticles

@@ -8,6 +8,7 @@ import { IArticle, IArticleState } from "../reducers/articleReducer";
 export enum ArticleActionTypes {
   GET_ALL_ARTICLES = "GET_ALL_ARTICLES",
   GET_BY_ID_ARTICLE = "GET_BY_ID_ARTICLE",
+  SET_ARTICLES = "SET_ARTICLES",
 }
 
 export interface IArticleGetAllAction {
@@ -20,7 +21,11 @@ export interface IArticleGetByIdAction {
     current: IArticle;
   }
 
-export type ArticleActions = IArticleGetAllAction | IArticleGetByIdAction;
+  export interface ISetArticleAction {
+    type: ArticleActionTypes.SET_ARTICLES;
+    articles: IArticle[];
+  }
+export type ArticleActions = IArticleGetAllAction | IArticleGetByIdAction | ISetArticleAction;
 
 export const getAllArticlesCreator: ActionCreator<
   ThunkAction<Promise<any>, IArticleState, null, IArticleGetAllAction>
@@ -56,3 +61,17 @@ export const getArticlesByIdCreator: ActionCreator<
   };
 };
 
+export const setArticlesCreator: ActionCreator<
+  ThunkAction<Promise<any>, IArticleState, null, ISetArticleAction>
+> = (articles: IArticle[]) => {
+  return async (dispatch: Dispatch) => {
+    try {
+      dispatch({
+        articles,
+        type: ArticleActionTypes.SET_ARTICLES,
+      });
+    } catch (err) {
+      console.error(err);
+    }
+  };
+};

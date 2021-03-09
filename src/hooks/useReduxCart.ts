@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux'
-import { removeProductFromCartCreator, addProductToCartCreator } from '../actions/CartActions'
+import { removeProductFromCartCreator, addProductToCartCreator, clearCartCreator } from '../actions/CartActions'
 import { IProduct } from '../reducers/productReducer'
 import { IAppState } from '../store/Store'
 
@@ -14,7 +14,10 @@ const useReduxCart = () => {
 	const removeProduct = (product: IProduct) => {
 		dispatch(removeProductFromCartCreator(cart.filter((item)=> item !== product)))
 	}
-	return {cart, addProduct, removeProduct};
+	const clearCart = () => {
+		dispatch(clearCartCreator([]))
+	}
+	return {cart, clearCart, addProduct, removeProduct};
 }
 
 export default useReduxCart

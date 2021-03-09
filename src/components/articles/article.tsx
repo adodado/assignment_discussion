@@ -46,13 +46,14 @@ const useStyles = makeStyles((theme) => ({
   },
 
   button: {
-    fontWeight: "bold",
     margin: "15px",
     width: "90%",
-    minHeight: "40px",
+    backgroundColor: "#003399",
+    color: theme.palette.common.white,
+    height: 40,
     "&:hover": {
       cursor: "pointer",
-      backgroundColor: "#eee",
+      backgroundColor: "#002369",
     },
   },
 }));

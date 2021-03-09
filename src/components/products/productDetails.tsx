@@ -79,9 +79,14 @@ const ProductDetails = (props: any) => {
               spacing={1}
               style={{ marginTop: 20 }}
             >
+              <div style={{ width: "100%", textAlign: "center" }}>
+                <Typography variant="button" component="h2">
+                  Required Articles
+                </Typography>
+              </div>
               {product.articles.map((article) => (
                 <div key={article.id} style={{ width: "200px" }}>
-                  <Grid item xs={6}>
+                  <Grid item xs={12}>
                     <Typography variant="button">
                       {
                         articles!.find(
@@ -90,9 +95,14 @@ const ProductDetails = (props: any) => {
                       }
                     </Typography>
                   </Grid>
-                  <Grid item xs={6}>
+                  <Grid item xs={12}>
                     <Typography variant="button">
-                      Qty:{article.amountRequired}
+                      Qty:
+                      {articles!.find(
+                        (item: { id: string }) => item.id === article.id
+                      )!.amountInStock > article.amountRequired
+                        ? article.amountRequired + " pieces"
+                        : article.amountRequired + " (Not available in stock)"}
                     </Typography>
                   </Grid>
                 </div>
@@ -104,6 +114,13 @@ const ProductDetails = (props: any) => {
                 className={classes.button}
                 startIcon={<AddShoppingCartIcon />}
                 onClick={handleOnClick}
+                disabled={product.articles.some(
+                  (article) =>
+                    article.amountRequired >
+                    articles!.find(
+                      (item: { id: string }) => item.id === article.id
+                    )!.amountInStock
+                )}
                 fullWidth
               >
                 Add to cart

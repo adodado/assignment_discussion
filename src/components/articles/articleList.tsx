@@ -13,6 +13,7 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.down("sm")]: {
       width: "100%",
     },
+    justifyContent: "center",
   },
 }));
 
@@ -21,7 +22,6 @@ const ArticlesList = () => {
   const { articles, getAllArticles } = useReduxArticles();
 
   React.useEffect(() => {
-    console.log(articles);
     if (articles === undefined || articles.length === 0) {
       getAllArticles();
     }
@@ -39,9 +39,9 @@ const ArticlesList = () => {
           className={classes.root}
         >
           {articles.map((article: IArticle) => (
-            <Grid key={article.id} item xs={6} sm={4} md={3}>
+            <Grid key={article.id} item xs={8} sm={8} md={4}>
               <Article
-                id={article.id}
+                role={"article-listing"}
                 name={article.name}
                 amountInStock={article.amountInStock}
               />

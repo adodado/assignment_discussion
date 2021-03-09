@@ -45,15 +45,8 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.down("xs")]: {
       fontSize: "1rem",
     },
+    textTransform: "capitalize",
   },
-
-  blackOnXS: {
-    [theme.breakpoints.down("xs")]: {
-      color: theme.palette.text.primary,
-      fontWeight: "bolder",
-    },
-  },
-
   cancelBtn: {
     position: "absolute",
     fontSize: "2rem",
@@ -76,7 +69,7 @@ const CartItems: React.FC<CartItemProps> = ({ product, articles }) => {
   };
 
   return (
-    <Grid container className={classes.root}>
+    <Grid container className={classes.root} role="cart-item-product-display">
       <IconButton
         color="inherit"
         className={classes.cancelBtn}
@@ -104,7 +97,12 @@ const CartItems: React.FC<CartItemProps> = ({ product, articles }) => {
             Product: {product.name}
           </Typography>
           {product.articles.map((article) => (
-            <div key={article.id} style={{ display: "flex" }}>
+            <div
+              // eslint-disable-next-line jsx-a11y/aria-role
+              role="cart-item-article-display"
+              key={article.id}
+              style={{ display: "flex" }}
+            >
               <Typography
                 variant="button"
                 component="h3"

@@ -43,11 +43,7 @@ const RightDrawer: FC<RightDrawerProps> = ({ open, onClickHandler }) => {
       onClick={onClickHandler}
     >
       <List>
-        <ListItem
-          button
-          onClick={() => history.push("/")}
-          style={{ borderBottom: "1px solid black" }}
-        >
+        <ListItem button onClick={() => history.push("/")}>
           <NavLink to="/" className={classes.navLink}>
             Products
           </NavLink>

@@ -14,7 +14,6 @@ const useStyles = makeStyles((theme) => ({
     height: 300,
     objectFit: "contain",
   },
-
   cardContent: {
     marginBottom: "20px",
     background: "#003399",
@@ -26,7 +25,6 @@ const useStyles = makeStyles((theme) => ({
     alignItems: "flex-start",
     width: "100%",
   },
-
   h3ResponsiveText: {
     fontSize: "1.1rem",
 
@@ -36,38 +34,20 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.only("xs")]: {
       fontSize: "0.9rem",
     },
-  },
-
-  btnResponsiveText: {
-    fontSize: "1.1rem",
-    [theme.breakpoints.only("xs")]: {
-      fontSize: "0.8rem",
-    },
-  },
-
-  button: {
-    margin: "15px",
-    width: "90%",
-    backgroundColor: "#003399",
-    color: theme.palette.common.white,
-    height: 40,
-    "&:hover": {
-      cursor: "pointer",
-      backgroundColor: "#002369",
-    },
+    textTransform: "capitalize",
   },
 }));
 type ArticleProps = {
-  id: string;
+  role: string;
   name?: string;
   amountInStock?: number;
 };
 
-const Article: React.FC<ArticleProps> = ({ id, name, amountInStock }) => {
+const Article: React.FC<ArticleProps> = ({ role, name, amountInStock }) => {
   const classes = useStyles({});
 
   return (
-    <Card className={classes.root}>
+    <Card className={classes.root} role={role}>
       <CardMedia
         className={classes.media}
         image="/images/product-placeholder.jpg"

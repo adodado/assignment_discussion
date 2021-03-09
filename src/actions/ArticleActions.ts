@@ -44,23 +44,6 @@ export const getAllArticlesCreator: ActionCreator<
   };
 };
 
-export const getArticlesByIdCreator: ActionCreator<
-  ThunkAction<Promise<any>, IArticleState, null, IArticleGetByIdAction>
-> = (id: string) => {
-  return async (dispatch: Dispatch) => {
-    try {
-      axiosRetry(axios, { retries: 3 });
-      const response = await axios.get("http://localhost:7000/articles/"+id);
-      dispatch({
-        current: response.data,
-        type: ArticleActionTypes.GET_BY_ID_ARTICLE,
-      });
-    } catch (err) {
-      console.error(err);
-    }
-  };
-};
-
 export const setArticlesCreator: ActionCreator<
   ThunkAction<Promise<any>, IArticleState, null, ISetArticleAction>
 > = (articles: IArticle[]) => {

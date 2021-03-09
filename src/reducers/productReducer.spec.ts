@@ -1,4 +1,3 @@
-import expect from "expect";
 import { ProductActionTypes } from "../actions/ProductActions";
 import {
   initialProductState,
@@ -6,18 +5,10 @@ import {
 } from "./productReducer";
 
 describe("product reducer", () => {
-  it("should return the initial state", () => {
-    expect(
-      productReducer(undefined, {
-        type: ProductActionTypes.GET_ALL,
-        products: [],
-      })
-    ).toEqual(initialProductState);
-  });
-  it("should handle GET_ALL", () => {
+  it("should handle GET_ALL_PRODUCTS", () => {
     expect(
       productReducer(initialProductState, {
-        type: ProductActionTypes.GET_ALL,
+        type: ProductActionTypes.GET_ALL_PRODUCTS,
         products: [],
       })
     ).toEqual(initialProductState);

@@ -32,13 +32,3 @@ export const getAllProductsCreator: ActionCreator<
     }
   };
 };
-
-export const getArticlesById = async (id: string) => {
-  try {
-    axiosRetry(axios, { retries: 3 });
-    const response = await axios.get("http://localhost:7000/articles/"+id);
-    return response.data;
-  } catch (err) {
-    console.error(err);
-  }
-};

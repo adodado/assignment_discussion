@@ -104,14 +104,17 @@ const NavigationBar: FC<NavigationBarProps> = ({ onMenuClickHandler }) => {
             Checkout
           </NavLink>
         </div>
-        <div className={classes.dot}>
-          <ShoppingCartIcon className={classes.icon} />
-          <div>
-            <Typography variant="h6" className={classes.cartItemText}>
-              {cart !== undefined && cart.length !== 0 ? cart.length : 0}
-            </Typography>
+
+        <Hidden mdDown>
+          <div className={classes.dot}>
+            <ShoppingCartIcon className={classes.icon} />
+            <div>
+              <Typography variant="h6" className={classes.cartItemText}>
+                {cart !== undefined && cart.length !== 0 ? cart.length : 0}
+              </Typography>
+            </div>
           </div>
-        </div>
+        </Hidden>
       </div>
       <div className={classes.rightContainer}>
         <Hidden mdUp>

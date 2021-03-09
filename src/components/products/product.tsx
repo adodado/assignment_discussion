@@ -20,7 +20,6 @@ const useStyles = makeStyles((theme) => ({
     height: 300,
     objectFit: "contain",
   },
-
   cardContent: {
     marginBottom: "20px",
     background: "#003399",
@@ -32,31 +31,24 @@ const useStyles = makeStyles((theme) => ({
     alignItems: "flex-start",
     width: "100%",
   },
-
   h3ResponsiveText: {
     fontSize: "1.1rem",
-
     [theme.breakpoints.only("md")]: {
       fontSize: "1rem",
     },
     [theme.breakpoints.only("xs")]: {
       fontSize: "0.9rem",
     },
-  },
-
-  btnResponsiveText: {
-    fontSize: "1.1rem",
-    [theme.breakpoints.only("xs")]: {
-      fontSize: "0.8rem",
-    },
+    textTransform: "capitalize",
   },
   buttonContainer: {
     display: "flex",
     justifyContent: "center",
-    marginBottom: 10,
+    marginBottom: 30,
+    marginTop: 40,
   },
   button: {
-    minWidth: 100,
+    minWidth: 300,
     backgroundColor: "#003399",
     color: theme.palette.common.white,
     height: 40,
@@ -67,6 +59,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 type ProductProps = {
+  role: string;
   id: string;
   name: string;
   productArticles: IProductArticle[];
@@ -74,6 +67,7 @@ type ProductProps = {
 };
 
 const Product: React.FC<ProductProps> = ({
+  role,
   id,
   name,
   productArticles,
@@ -91,7 +85,7 @@ const Product: React.FC<ProductProps> = ({
   };
 
   return (
-    <Card className={classes.root}>
+    <Card className={classes.root} role={role}>
       <CardMedia
         className={classes.media}
         image="/images/product-placeholder.jpg"
@@ -110,23 +104,42 @@ const Product: React.FC<ProductProps> = ({
             </Typography>
           </div>
           <div>
-            <IconButton color="inherit" onClick={onClickHandler} size="medium">
+            <IconButton
+              color="inherit"
+              onClick={onClickHandler}
+              size="medium"
+              style={{ padding: "0px" }}
+              disabled={productArticles.some(
+                (article) =>
+                  article.amountRequired >
+                  articles!.find(
+                    (item: { id: string }) => item.id === article.id
+                  )!.amountInStock
+              )}
+            >
               <AddShoppingCartIcon />
             </IconButton>
           </div>
         </div>
       </CardContent>
-      <div
-        className={classes.row}
-        style={{ alignItems: "center", width: "90%", margin: "10px" }}
-      >
+      <div className={classes.row} style={{ margin: "10px", display: "block" }}>
+        <div style={{ width: "100%", textAlign: "center" }}>
+          <Typography
+            variant="button"
+            component="h2"
+            className={classes.h3ResponsiveText}
+          >
+            Required Articles
+          </Typography>
+        </div>
         {productArticles.map((article) => (
-          <div key={article.id}>
+          <div key={article.id} style={{ width: "100%" }}>
             <Typography
               variant="button"
               component="h3"
               className={classes.h3ResponsiveText}
             >
+              Article:{" "}
               {
                 articles!.find(
                   (item: { id: string }) => item.id === article.id
@@ -137,15 +150,20 @@ const Product: React.FC<ProductProps> = ({
               variant="button"
               component="h3"
               className={clsx(classes.h3ResponsiveText)}
-              align="right"
             >
-              Qty:{article.amountRequired}
+              Qty:
+              {articles!.find((item: { id: string }) => item.id === article.id)!
+                .amountInStock > article.amountRequired
+                ? article.amountRequired + " pieces"
+                : article.amountRequired + " (Not available in stock)"}
             </Typography>
           </div>
         ))}
       </div>
       <div className={classes.buttonContainer}>
         <Button
+          role={"product-listing-details-button"}
+          title={id}
           className={classes.button}
           variant="outlined"
           color="primary"

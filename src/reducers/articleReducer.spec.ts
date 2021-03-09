@@ -1,4 +1,3 @@
-import expect from "expect";
 import { ArticleActionTypes } from "../actions/ArticleActions";
 import {
 initialArticlesState,
@@ -6,18 +5,10 @@ initialArticlesState,
 } from "./articleReducer";
 
 describe("articles reducer", () => {
-  it("should return the initial state", () => {
-    expect(
-        articleReducer(undefined, {
-        type: ArticleActionTypes.GET_ALL,
-        articles: [],
-      })
-    ).toEqual(initialArticlesState);
-  });
-  it("should handle GET_ALL", () => {
+  it("should handle GET_ALL_ARTICLES", () => {
     expect(
         articleReducer(initialArticlesState, {
-        type: ArticleActionTypes.GET_ALL,
+        type: ArticleActionTypes.GET_ALL_ARTICLES,
         articles: [],
       })
     ).toEqual(initialArticlesState);

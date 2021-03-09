@@ -6,12 +6,12 @@ export interface ICartState {
   readonly cart: IProduct[];
 }
 
-const initialSalesState: ICartState = {
+export const initialCartState: ICartState = {
   cart: [],
 };
 
 export const cartReducer: Reducer<ICartState, CartActions> = (
-  state = initialSalesState,
+  state = initialCartState,
   action
 ) => {
   switch (action.type) {

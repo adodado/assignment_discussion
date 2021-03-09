@@ -14,6 +14,7 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.down("sm")]: {
       width: "100%",
     },
+    justifyContent: "center",
   },
 }));
 
@@ -38,13 +39,14 @@ const ProductList = () => {
       ) : (
         <Grid
           container
-          spacing={4}
+          spacing={2}
           data-testid="container"
           className={classes.root}
         >
           {products.map((product: IProduct) => (
-            <Grid key={product.id} item xs={6} sm={4} md={3}>
+            <Grid key={product.id} item xs={8} sm={8} md={4}>
               <Product
+                role={"product-listing"}
                 id={product.id}
                 name={product.name}
                 productArticles={product.articles}

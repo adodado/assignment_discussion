@@ -6,7 +6,7 @@ import useReduxCart from "../../hooks/useReduxCart";
 import useReduxArticles from "../../hooks/useReduxArticles";
 import axios from "axios";
 import axiosRetry from "axios-retry";
-import CircularProgress from "@material-ui/core/CircularProgress";
+import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -14,15 +14,15 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(2),
   },
   heading: {
-    textTransform: "uppercase",
+    textTransform: "capitalize",
     marginBottom: theme.spacing(3),
   },
   row: {
     display: "flex",
     justifyContent: "space-between",
     marginBottom: theme.spacing(1),
+    textTransform: "capitalize",
   },
-
   checkoutBtn: {
     marginTop: theme.spacing(3),
     marginBottom: theme.spacing(3),
@@ -35,16 +35,18 @@ const useStyles = makeStyles((theme) => ({
     },
   },
 }));
-
-const SaleSummary = () => {
+interface SaleSummaryProps {
+  setProcessingSale(value: boolean): void;
+}
+const SaleSummary: React.FC<SaleSummaryProps> = ({ setProcessingSale }) => {
   const classes = useStyles();
+  const history = useHistory();
   const { cart, clearCart } = useReduxCart();
   const { articles, getAllArticles } = useReduxArticles();
-  let processingSale = false;
 
   const handleCheckout = async () => {
+    setProcessingSale(true);
     let orderedProducts: string[] = [];
-    let modifiedArticles = [];
     for (const item of cart) {
       if (!orderedProducts.includes(item.id)) {
         const amountSold = cart.filter((c) => c.id === item.id).length;
@@ -61,59 +63,52 @@ const SaleSummary = () => {
             console.error(err);
           });
         for (const article of item.articles) {
-          let art = articles!.find((item) => item.id === article.id);
           await axios
             .patch("http://localhost:7000/articles/" + article.id, {
-              name: art!.name,
+              name: articles!.find((item) => item.id === article.id)!.name,
               amountToSubtract: article.amountRequired,
             })
             .catch((err) => {
               console.error(err);
             });
-          if (art) {
-            modifiedArticles.push({
-              id: article.id,
-              name: art.name,
-              amountInStock: art.amountInStock - article.amountRequired,
-            });
-          }
         }
       }
-      getAllArticles();
     }
+    getAllArticles();
     clearCart();
+    history.push("/");
   };
 
   return (
     <>
-      {processingSale ? (
-        <CircularProgress size={100} style={{ marginTop: 100 }} />
-      ) : (
-        <>
-          <Grid container className={classes.root}>
-            <Grid item xs={12}>
-              <Typography variant="h6" className={classes.heading}>
-                Order Summary
-              </Typography>
-            </Grid>
-            <Grid item xs={12} className={classes.row}>
-              <Typography variant="button">
-                {cart !== undefined && cart.length !== 0 ? cart.length : 0}{" "}
-                Products
-              </Typography>
-            </Grid>
-          </Grid>
-          <Button
-            className={classes.checkoutBtn}
-            variant="contained"
-            color="default"
-            fullWidth
-            onClick={handleCheckout}
+      <Grid container className={classes.root}>
+        <Grid item xs={12}>
+          <Typography variant="h6" className={classes.heading}>
+            Order Summary
+          </Typography>
+        </Grid>
+        <Grid item xs={12} className={classes.row}>
+          <Typography
+            role="sale-summary-product-quantity"
+            variant="button"
+            style={{
+              textTransform: "capitalize",
+            }}
           >
-            Complete
-          </Button>
-        </>
-      )}
+            {cart !== undefined && cart.length !== 0 ? cart.length : 0} Products
+          </Typography>
+        </Grid>
+      </Grid>
+      <Button
+        className={classes.checkoutBtn}
+        title="sale-summary-order-checkout"
+        variant="contained"
+        color="default"
+        fullWidth
+        onClick={handleCheckout}
+      >
+        Complete
+      </Button>
     </>
   );
 };

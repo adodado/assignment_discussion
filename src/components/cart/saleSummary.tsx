@@ -7,6 +7,8 @@ import useReduxArticles from "../../hooks/useReduxArticles";
 import axios from "axios";
 import axiosRetry from "axios-retry";
 import { useHistory } from "react-router-dom";
+import { IProduct } from "../../reducers/productReducer";
+import { IArticle } from "../../reducers/articleReducer";
 
 const { REACT_APP_API_BASE_URL } = process.env;
 
@@ -37,9 +39,49 @@ const useStyles = makeStyles((theme) => ({
     },
   },
 }));
+
 interface SaleSummaryProps {
   setProcessingSale(value: boolean): void;
 }
+
+async function updateMultipleArticles(cart: IProduct[], articles: IArticle[]) {
+  const articlesToUpdate: IArticle[] = [];
+  cart.forEach((item) => {
+    for (const article of item.articles) {
+      if (!articlesToUpdate.some((item) => item.id === article.id)) {
+        const art = articles!.find((item) => item.id === article.id);
+        if (art) {
+          articlesToUpdate.push({
+            id: art.id,
+            name: art.name,
+            amountInStock: art.amountInStock - article.amountRequired,
+          });
+        }
+      } else {
+        const art = articlesToUpdate.find((item) => item.id === article.id);
+        if (art) {
+          const index = articlesToUpdate!.findIndex(
+            (item) => item.id === article.id
+          );
+          articlesToUpdate[index] = {
+            id: art.id,
+            name: art.name,
+            amountInStock: art.amountInStock - article.amountRequired,
+          };
+        }
+      }
+    }
+  });
+  if (articlesToUpdate.length > 0) {
+    axiosRetry(axios, { retries: 5 });
+    await axios
+      .patch(REACT_APP_API_BASE_URL + "articles/", articlesToUpdate)
+      .catch((err) => {
+        console.error(err);
+      });
+  }
+}
+
 const SaleSummary: React.FC<SaleSummaryProps> = ({ setProcessingSale }) => {
   const classes = useStyles();
   const history = useHistory();
@@ -56,30 +98,18 @@ const SaleSummary: React.FC<SaleSummaryProps> = ({ setProcessingSale }) => {
           productId: item.id,
           amountSold,
         };
-        orderedProducts.push(item.id);
 
-        axiosRetry(axios, { retries: 10 });
+        axiosRetry(axios, { retries: 5 });
         await axios
           .post(REACT_APP_API_BASE_URL + "sales/", productInformation)
           .catch((err) => {
             console.error(err);
           });
-      }
-      // Since i refresh the articles after the sale via api call
-      // made most sense to just update each article by itself and send in just what the amount to subtract is
-      // instead of the bulk patch
-      for (const article of item.articles) {
-        axiosRetry(axios, { retries: 10 });
-        await axios
-          .patch(REACT_APP_API_BASE_URL + "articles/" + article.id, {
-            name: articles!.find((item) => item.id === article.id)!.name,
-            amountToSubtract: article.amountRequired,
-          })
-          .catch((err) => {
-            console.error(err);
-          });
+
+        orderedProducts.push(item.id);
       }
     }
+    await updateMultipleArticles(cart, articles);
     getAllArticles();
     clearCart();
     history.push("/");

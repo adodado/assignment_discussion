@@ -17,6 +17,9 @@ const useStyles = makeStyles((theme) => ({
     margin: theme.spacing(2, "auto"),
     marginTop: 100,
   },
+  loadingContainer: { display: "flex", justifyContent: "center" },
+  divContainer: { textAlign: "center", marginTop: "50px" },
+  emptyText: { fontWeight: "bold", fontSize: "25px" },
 }));
 
 function uuidv4() {
@@ -34,7 +37,7 @@ const CartItemList = () => {
   const { articles } = useReduxArticles();
   if (processingSale) {
     return (
-      <div style={{ display: "flex", justifyContent: "center" }}>
+      <div className={classes.loadingContainer}>
         <CircularProgress size={100} style={{ marginTop: 100 }} />
       </div>
     );
@@ -61,9 +64,9 @@ const CartItemList = () => {
             </Container>
           </div>
         ) : (
-          <div style={{ textAlign: "center", marginTop: "50px" }}>
+          <div className={classes.divContainer}>
             <Typography
-              style={{ fontWeight: "bold", fontSize: "25px" }}
+              className={classes.emptyText}
               variant="body1"
               component="p"
             >

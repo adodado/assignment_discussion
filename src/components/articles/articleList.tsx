@@ -15,6 +15,13 @@ const useStyles = makeStyles((theme) => ({
     },
     justifyContent: "center",
   },
+  container: {
+    display: "flex",
+    justifyContent: "center",
+  },
+  marginTop: {
+    marginTop: 100,
+  },
 }));
 
 const ArticlesList = () => {
@@ -28,9 +35,9 @@ const ArticlesList = () => {
   }, [articles, getAllArticles]);
 
   return (
-    <div style={{ display: "flex", justifyContent: "center" }}>
+    <div className={classes.container}>
       {articles === undefined || articles.length === 0 ? (
-        <CircularProgress size={100} style={{ marginTop: 100 }} />
+        <CircularProgress size={100} className={classes.marginTop} />
       ) : (
         <Grid
           container

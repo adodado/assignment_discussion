@@ -36,6 +36,12 @@ const useStyles = makeStyles((theme) => ({
     },
     textTransform: "capitalize",
   },
+  fullWidth: {
+    width: "100%",
+  },
+  marginLeft: {
+    marginLeft: "10px",
+  },
 }));
 type ArticleProps = {
   role: string;
@@ -55,7 +61,7 @@ const Article: React.FC<ArticleProps> = ({ role, name, amountInStock }) => {
         component="img"
       />
       <CardContent className={classes.cardContent}>
-        <div style={{ width: "100%" }}>
+        <div className={classes.fullWidth}>
           <div className={classes.row}>
             <Typography
               variant="button"
@@ -70,8 +76,7 @@ const Article: React.FC<ArticleProps> = ({ role, name, amountInStock }) => {
       <Typography
         variant="button"
         component="h3"
-        className={classes.h3ResponsiveText}
-        style={{ marginLeft: "10px" }}
+        className={[classes.h3ResponsiveText, classes.marginLeft].join(" ")}
       >
         Available Qty: {amountInStock}
       </Typography>

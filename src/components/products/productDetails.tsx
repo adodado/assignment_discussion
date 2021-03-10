@@ -36,6 +36,8 @@ const useStyles = makeStyles((theme) => ({
       fontSize: "1.6rem",
     },
   },
+  gridContainer: { display: "flex", flexFlow: "row" },
+  articleDiv: { width: "100%", textAlign: "center" },
 }));
 
 const ProductDetails = (props: any) => {
@@ -54,11 +56,7 @@ const ProductDetails = (props: any) => {
   return (
     <div className={classes.contentWrapper}>
       <Container className={classes.container} role={"product-details"}>
-        <Grid
-          container
-          spacing={3}
-          style={{ display: "flex", flexFlow: "row" }}
-        >
+        <Grid container spacing={3} className={classes.gridContainer}>
           <Grid item xs={12} md={6}>
             <img
               className={classes.image}
@@ -79,7 +77,7 @@ const ProductDetails = (props: any) => {
               spacing={1}
               style={{ marginTop: 20 }}
             >
-              <div style={{ width: "100%", textAlign: "center" }}>
+              <div className={classes.articleDiv}>
                 <Typography variant="button" component="h2">
                   Required Articles
                 </Typography>

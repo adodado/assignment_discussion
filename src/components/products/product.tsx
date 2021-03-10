@@ -60,6 +60,9 @@ const useStyles = makeStyles((theme) => ({
   icon: {
     fontSize: "2rem",
   },
+  container: { width: "100%", display: "flex" },
+  requieredArticleDiv: { width: "100%", textAlign: "center" },
+  rowDiv: { margin: "10px", display: "block" },
 }));
 type ProductProps = {
   role: string;
@@ -96,7 +99,7 @@ const Product: React.FC<ProductProps> = ({
         component="img"
       />
       <CardContent className={classes.cardContent}>
-        <div style={{ width: "100%", display: "flex" }}>
+        <div className={classes.container}>
           <div className={classes.row}>
             <Typography
               variant="button"
@@ -125,8 +128,8 @@ const Product: React.FC<ProductProps> = ({
           </div>
         </div>
       </CardContent>
-      <div className={classes.row} style={{ margin: "10px", display: "block" }}>
-        <div style={{ width: "100%", textAlign: "center" }}>
+      <div className={[classes.row, classes.rowDiv].join(" ")}>
+        <div className={classes.requieredArticleDiv}>
           <Typography
             variant="button"
             component="h2"

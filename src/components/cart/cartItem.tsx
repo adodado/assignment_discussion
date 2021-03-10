@@ -57,6 +57,10 @@ const useStyles = makeStyles((theme) => ({
     fontSize: "2rem",
     color: "#003399",
   },
+  articleContainer: {
+    display: "flex",
+  },
+  minWidth: { minWidth: 200 },
 }));
 
 type CartItemProps = {
@@ -107,13 +111,12 @@ const CartItems: React.FC<CartItemProps> = ({ product, articles }) => {
               // eslint-disable-next-line jsx-a11y/aria-role
               role="cart-item-article-display"
               key={article.id}
-              style={{ display: "flex" }}
+              className={classes.articleContainer}
             >
               <Typography
                 variant="button"
                 component="h3"
-                className={classes.responsiveText}
-                style={{ minWidth: 200 }}
+                className={[classes.responsiveText, classes.minWidth].join(" ")}
               >
                 {
                   articles!.find(

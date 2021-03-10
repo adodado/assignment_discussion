@@ -58,7 +58,7 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   icon: {
-    fontSize: "3rem",
+    fontSize: "2rem",
   },
 }));
 type ProductProps = {

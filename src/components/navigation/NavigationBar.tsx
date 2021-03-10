@@ -65,13 +65,14 @@ const useStyles = makeStyles((theme) => ({
     position: "relative",
   },
   icon: {
-    color: theme.palette.common.black,
+    color: "#003399",
+    fontSize: "2rem",
   },
   dot: {
     display: "flex",
   },
   cartItemText: {
-    color: theme.palette.common.black,
+    color: "#003399",
     fontSize: "14px",
     fontWeight: "bold",
   },

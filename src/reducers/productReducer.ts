@@ -1,5 +1,5 @@
 import { Reducer } from "redux";
-import { ProductActions, ProductActionTypes } from "../actions/ProductActions";
+import { ProductActions, ProductActionTypes } from "../actions/productActions";
 
 export interface IProductArticle {
   id: string;

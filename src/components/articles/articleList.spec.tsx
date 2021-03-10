@@ -56,7 +56,7 @@ const initialState = {
 };
 
 describe("ArticleList component", () => {
-  it("should display articles from state", () => {
+  it("should display multiple articles", () => {
     const store = mockStore(initialState);
     const wrapper = render(
       <Provider store={store}>

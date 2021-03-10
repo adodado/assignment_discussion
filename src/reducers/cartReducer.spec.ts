@@ -1,4 +1,4 @@
-import { CartActionTypes } from "../actions/CartActions";
+import { CartActionTypes } from "../actions/cartActions";
 import { cartReducer, initialCartState } from "./cartReducer";
 
 const cartState = {

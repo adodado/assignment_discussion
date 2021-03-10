@@ -1,9 +1,10 @@
 import { ActionCreator, Dispatch } from "redux";
 import { ThunkAction } from "redux-thunk";
 import axios from "axios";
-import axiosRetry from 'axios-retry';
-
+import axiosRetry from "axios-retry";
 import { IProduct, IProductState } from "../reducers/productReducer";
+
+const { REACT_APP_API_BASE_URL } = process.env;
 
 export enum ProductActionTypes {
   GET_ALL_PRODUCTS = "GET_ALL_PRODUCTS",
@@ -22,7 +23,7 @@ export const getAllProductsCreator: ActionCreator<
   return async (dispatch: Dispatch) => {
     try {
       axiosRetry(axios, { retries: 3 });
-      const response = await axios.get("http://localhost:7000/products/");
+      const response = await axios.get(REACT_APP_API_BASE_URL + "products/");
       dispatch({
         products: response.data,
         type: ProductActionTypes.GET_ALL_PRODUCTS,

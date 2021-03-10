@@ -1,6 +1,6 @@
 import React from "react";
-import NavigationBar from "./NavigationBar";
-import RightDrawer from "./Drawer";
+import NavigationBar from "./navigationBar";
+import RightDrawer from "./drawer";
 
 const Navigation = () => {
   const [drawerOpen, setDrawerOpen] = React.useState(false);

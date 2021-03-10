@@ -1,17 +1,15 @@
 import * as React from "react";
 import { render } from "@testing-library/react";
-import SaleSummary from "./saleSummary";
-import thunk from "redux-thunk";
-import configureMockStore from "redux-mock-store";
-import { Provider } from "react-redux";
 import userEvent from "@testing-library/user-event";
+import configureMockStore from "redux-mock-store";
+import thunk from "redux-thunk";
+import CartItemList from "./cartItemList";
+import { Provider } from "react-redux";
 
 const mockStore = configureMockStore([thunk]);
 
 const initialState = {
-  productState: {
-    products: [],
-  },
+  productState: {},
   articlesState: {
     articles: [
       {
@@ -27,6 +25,7 @@ const initialState = {
     ],
   },
   cartState: {
+    removeProduct: jest.fn(),
     cart: [
       {
         id: "p1",
@@ -55,41 +54,37 @@ const initialState = {
     ],
   },
 };
-const setProcessingSale = jest.fn();
-describe("Salesummary component", () => {
-  it("should display ammount of products", () => {
+
+describe("Cartitem list component", () => {
+  it("should display multiple products", () => {
     const store = mockStore(initialState);
     const wrapper = render(
       <Provider store={store}>
-        <SaleSummary setProcessingSale={setProcessingSale} />
+        <CartItemList />
       </Provider>
     );
-    expect(
-      wrapper.getAllByRole("sale-summary-product-quantity")[0].innerHTML
-    ).toEqual("2 Products");
+    expect(wrapper.getAllByRole("cart-item-product-display").length).toEqual(2);
   });
-  it("should display complete sale button", () => {
+  it("should display remove button for each product in cart", () => {
     const store = mockStore(initialState);
     const wrapper = render(
       <Provider store={store}>
-        <SaleSummary setProcessingSale={setProcessingSale} />
+        <CartItemList />
       </Provider>
     );
-    expect(
-      wrapper.getByTitle("sale-summary-order-checkout")
-    ).toBeInTheDocument();
+    expect(wrapper.getAllByRole("cart-item-remove-product").length).toEqual(2);
   });
-  it("should fire complete sale button event", () => {
+  it("should fire remove button event", () => {
     const store = mockStore(initialState);
     const wrapper = render(
       <Provider store={store}>
-        <SaleSummary setProcessingSale={setProcessingSale} />
+        <CartItemList />
       </Provider>
     );
-    const control = wrapper.getByTitle("sale-summary-order-checkout");
-    const completeOrderFunctionMock = jest.fn();
-    control.onclick = completeOrderFunctionMock;
-    userEvent.click(control);
-    expect(completeOrderFunctionMock).toHaveBeenCalledTimes(1);
+    const control = wrapper.getAllByTitle("cart-item-remove-product");
+    const removeFunctionMock = jest.fn();
+    control[0].onclick = removeFunctionMock;
+    userEvent.click(control[0]);
+    expect(removeFunctionMock).toHaveBeenCalledTimes(1);
   });
 });

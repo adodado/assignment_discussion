@@ -53,7 +53,7 @@ const ProductDetails = (props: any) => {
 
   return (
     <div className={classes.contentWrapper}>
-      <Container className={classes.container}>
+      <Container className={classes.container} role={"product-details"}>
         <Grid
           container
           spacing={3}
@@ -85,7 +85,11 @@ const ProductDetails = (props: any) => {
                 </Typography>
               </div>
               {product.articles.map((article) => (
-                <div key={article.id} style={{ width: "200px" }}>
+                <div
+                  key={article.id}
+                  style={{ width: "200px" }}
+                  title="product-details-articles-list"
+                >
                   <Grid item xs={12}>
                     <Typography variant="button">
                       {

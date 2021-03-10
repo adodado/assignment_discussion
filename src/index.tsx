@@ -2,7 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
 import * as serviceWorker from "./serviceWorker";
-import configureStore from "./store/Store";
+import configureStore from "./store/store";
 import { Provider } from "react-redux";
 import {
   Redirect,
@@ -10,12 +10,12 @@ import {
   BrowserRouter as Router,
   Switch,
 } from "react-router-dom";
-import ProductsPage from "./pages/ProductsPage";
+import ProductsPage from "./pages/productsPage";
 import Footer from "./components/footer/footer";
-import ProductDetailsPage from "./pages/ProductDetailsPage";
-import ArticlesPage from "./pages/ArticlesPage";
-import CheckoutPage from "./pages/CheckoutPage";
-import NotFoundPage from "./pages/NotFoundPage";
+import ProductDetailsPage from "./pages/productDetailsPage";
+import ArticlesPage from "./pages/articlesPage";
+import CheckoutPage from "./pages/checkoutPage";
+import NotFoundPage from "./pages/notFoundPage";
 import Navigation from "./components/navigation";
 
 // Generate the initial store

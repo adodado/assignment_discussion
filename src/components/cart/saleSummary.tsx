@@ -8,6 +8,8 @@ import axios from "axios";
 import axiosRetry from "axios-retry";
 import { useHistory } from "react-router-dom";
 
+const { REACT_APP_API_BASE_URL } = process.env;
+
 const useStyles = makeStyles((theme) => ({
   root: {
     border: `1px solid ${theme.palette.common.black}`,
@@ -56,15 +58,18 @@ const SaleSummary: React.FC<SaleSummaryProps> = ({ setProcessingSale }) => {
         };
         orderedProducts.push(item.id);
 
-        axiosRetry(axios, { retries: 10 });
+        axiosRetry(axios, { retries: 15 });
         await axios
-          .post("http://localhost:7000/sales/", productInformation)
+          .post(REACT_APP_API_BASE_URL + "sales/", productInformation)
           .catch((err) => {
             console.error(err);
           });
+        // Since i refresh the articles after the sale via api call
+        // made most sense to just update each article by itself and send in just what the amount to subtract is
+        // instead of the bulk patch
         for (const article of item.articles) {
           await axios
-            .patch("http://localhost:7000/articles/" + article.id, {
+            .patch(REACT_APP_API_BASE_URL + "articles/" + article.id, {
               name: articles!.find((item) => item.id === article.id)!.name,
               amountToSubtract: article.amountRequired,
             })

@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from 'react-redux'
-import { removeProductFromCartCreator, addProductToCartCreator, clearCartCreator } from '../actions/CartActions'
+import { removeProductFromCartCreator, addProductToCartCreator, clearCartCreator } from '../actions/cartActions'
 import { IProduct } from '../reducers/productReducer'
-import { IAppState } from '../store/Store'
+import { IAppState } from '../store/store'
 
 const useReduxCart = () => {
 	const dispatch = useDispatch()

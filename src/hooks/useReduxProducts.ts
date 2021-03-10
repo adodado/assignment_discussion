@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from 'react-redux'
-import { getAllArticlesCreator } from '../actions/ArticleActions'
-import { getAllProductsCreator } from '../actions/ProductActions'
-import { IAppState } from '../store/Store'
+import { getAllArticlesCreator } from '../actions/articleActions'
+import { getAllProductsCreator } from '../actions/productActions'
+import { IAppState } from '../store/store'
 
 const useReduxProducts = () => {
 	const dispatch = useDispatch()

@@ -1,5 +1,5 @@
 import { Reducer } from "redux";
-import { ArticleActions, ArticleActionTypes } from "../actions/ArticleActions";
+import { ArticleActions, ArticleActionTypes } from "../actions/articleActions";
 
 export interface IArticle {
   id: string;
@@ -21,12 +21,6 @@ export const articleReducer: Reducer<IArticleState, ArticleActions> = (
 ) => {
   switch (action.type) {
     case ArticleActionTypes.GET_ALL_ARTICLES: {
-      return {
-        ...state,
-        articles: action.articles,
-      };
-    }
-    case ArticleActionTypes.SET_ARTICLES: {
       return {
         ...state,
         articles: action.articles,

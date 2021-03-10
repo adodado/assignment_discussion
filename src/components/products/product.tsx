@@ -57,6 +57,9 @@ const useStyles = makeStyles((theme) => ({
       backgroundColor: "#002369",
     },
   },
+  icon: {
+    fontSize: "3rem",
+  },
 }));
 type ProductProps = {
   role: string;
@@ -117,7 +120,7 @@ const Product: React.FC<ProductProps> = ({
                   )!.amountInStock
               )}
             >
-              <AddShoppingCartIcon />
+              <AddShoppingCartIcon className={classes.icon} />
             </IconButton>
           </div>
         </div>
@@ -133,7 +136,11 @@ const Product: React.FC<ProductProps> = ({
           </Typography>
         </div>
         {productArticles.map((article) => (
-          <div key={article.id} style={{ width: "100%" }}>
+          <div
+            key={article.id}
+            style={{ width: "100%" }}
+            title={"product-listing-articles"}
+          >
             <Typography
               variant="button"
               component="h3"

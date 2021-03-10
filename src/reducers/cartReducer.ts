@@ -1,5 +1,5 @@
 import { Reducer } from "redux";
-import { CartActions, CartActionTypes } from "../actions/CartActions";
+import { CartActions, CartActionTypes } from "../actions/cartActions";
 import { IProduct } from "./productReducer";
 
 export interface ICartState {

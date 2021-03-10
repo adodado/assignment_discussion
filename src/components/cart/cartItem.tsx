@@ -3,7 +3,7 @@ import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
 import CardMedia from "@material-ui/core/CardMedia";
 import { makeStyles } from "@material-ui/core/styles";
-import CancelIcon from "@material-ui/icons/Cancel";
+import DeleteForeverSharpIcon from "@material-ui/icons/DeleteForeverSharp";
 import IconButton from "@material-ui/core/IconButton";
 import useReduxCart from "../../hooks/useReduxCart";
 import clsx from "clsx";
@@ -53,6 +53,10 @@ const useStyles = makeStyles((theme) => ({
     right: 2,
     top: 2,
   },
+  icon: {
+    fontSize: "2rem",
+    color: "#003399",
+  },
 }));
 
 type CartItemProps = {
@@ -71,11 +75,13 @@ const CartItems: React.FC<CartItemProps> = ({ product, articles }) => {
   return (
     <Grid container className={classes.root} role="cart-item-product-display">
       <IconButton
+        title="cart-item-remove-product"
         color="inherit"
+        size="medium"
         className={classes.cancelBtn}
         onClick={handleOnclick}
       >
-        <CancelIcon />
+        <DeleteForeverSharpIcon className={classes.icon} />
       </IconButton>
       <Grid item xs={4}>
         <CardMedia

@@ -1,7 +1,6 @@
 import * as React from "react";
 import { render } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
-import ProductList from "./productList";
+import ProductDetails from "./productDetails";
 import configureMockStore from "redux-mock-store";
 import thunk from "redux-thunk";
 import { Provider } from "react-redux";
@@ -65,36 +64,25 @@ const initialState = {
   },
 };
 
-describe("Productlist component", () => {
-  it("should display multiple products", () => {
+describe("ProductDetails component", () => {
+  it("should display single product", () => {
     const store = mockStore(initialState);
     const wrapper = render(
       <Provider store={store}>
-        <ProductList />
+        <ProductDetails id={"p1"} />
       </Provider>
     );
-    expect(wrapper.getAllByRole("product-listing").length).toEqual(2);
+    expect(wrapper.getAllByRole("product-details").length).toEqual(1);
   });
-  it("should display details button for each product", () => {
+  it("should display product details", () => {
     const store = mockStore(initialState);
     const wrapper = render(
       <Provider store={store}>
-        <ProductList />
+        <ProductDetails id={"p2"} />
       </Provider>
     );
     expect(
-      wrapper.getAllByRole("product-listing-details-button").length
+      wrapper.getAllByTitle("product-details-articles-list").length
     ).toEqual(2);
-  });
-  it("should fire details button event", () => {
-    const store = mockStore(initialState);
-    const wrapper = render(
-      <Provider store={store}>
-        <ProductList />
-      </Provider>
-    );
-    const control = wrapper.getByTitle("p1");
-    userEvent.click(control);
-    expect(mockHistoryPush).toHaveBeenCalledWith("/details/p1");
   });
 });

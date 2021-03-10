@@ -72,7 +72,7 @@ describe("Cartitem list component", () => {
         <CartItemList />
       </Provider>
     );
-    expect(wrapper.getAllByRole("cart-item-remove-product").length).toEqual(2);
+    expect(wrapper.getAllByTitle("cart-item-remove-product").length).toEqual(2);
   });
   it("should fire remove button event", () => {
     const store = mockStore(initialState);

@@ -38,6 +38,9 @@ const useStyles = makeStyles((theme) => ({
   },
   gridContainer: { display: "flex", flexFlow: "row" },
   articleDiv: { width: "100%", textAlign: "center" },
+  topMargin: { marginTop: 20 },
+  setWidth200: { width: "200px" },
+  noMargin: { margin: "0 auto" },
 }));
 
 const ProductDetails = (props: any) => {
@@ -75,7 +78,7 @@ const ProductDetails = (props: any) => {
               container
               justify="center"
               spacing={1}
-              style={{ marginTop: 20 }}
+              className={classes.topMargin}
             >
               <div className={classes.articleDiv}>
                 <Typography variant="button" component="h2">
@@ -85,7 +88,7 @@ const ProductDetails = (props: any) => {
               {product.articles.map((article) => (
                 <div
                   key={article.id}
-                  style={{ width: "200px" }}
+                  className={classes.setWidth200}
                   title="product-details-articles-list"
                 >
                   <Grid item xs={12}>
@@ -110,7 +113,7 @@ const ProductDetails = (props: any) => {
                 </div>
               ))}
             </Grid>
-            <Grid item container xs={12} md={6} style={{ margin: "0 auto" }}>
+            <Grid item container xs={12} md={6} className={classes.noMargin}>
               <Button
                 variant="contained"
                 className={classes.button}

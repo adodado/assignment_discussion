@@ -38,6 +38,9 @@ const useStyles = makeStyles((theme) => ({
       backgroundColor: "#002369",
     },
   },
+  capitalizeText: {
+    textTransform: "capitalize",
+  },
 }));
 
 interface SaleSummaryProps {
@@ -127,9 +130,7 @@ const SaleSummary: React.FC<SaleSummaryProps> = ({ setProcessingSale }) => {
           <Typography
             role="sale-summary-product-quantity"
             variant="button"
-            style={{
-              textTransform: "capitalize",
-            }}
+            className={classes.capitalizeText}
           >
             {cart !== undefined && cart.length !== 0 ? cart.length : 0} Products
           </Typography>

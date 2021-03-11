@@ -63,6 +63,8 @@ const useStyles = makeStyles((theme) => ({
   container: { width: "100%", display: "flex" },
   requieredArticleDiv: { width: "100%", textAlign: "center" },
   rowDiv: { margin: "10px", display: "block" },
+  zeroPadding: {padding: "0px" },
+  fullWidth: { width: "100%" },
 }));
 type ProductProps = {
   role: string;
@@ -114,7 +116,7 @@ const Product: React.FC<ProductProps> = ({
               color="inherit"
               onClick={onClickHandler}
               size="medium"
-              style={{ padding: "0px" }}
+              className={classes.zeroPadding}
               disabled={productArticles.some(
                 (article) =>
                   article.amountRequired >
@@ -141,7 +143,7 @@ const Product: React.FC<ProductProps> = ({
         {productArticles.map((article) => (
           <div
             key={article.id}
-            style={{ width: "100%" }}
+            className={classes.fullWidth}
             title={"product-listing-articles"}
           >
             <Typography

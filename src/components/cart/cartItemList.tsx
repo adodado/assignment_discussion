@@ -20,6 +20,8 @@ const useStyles = makeStyles((theme) => ({
   loadingContainer: { display: "flex", justifyContent: "center" },
   divContainer: { textAlign: "center", marginTop: "50px" },
   emptyText: { fontWeight: "bold", fontSize: "25px" },
+  progress: { marginTop: 100 },
+  setPadding10: { padding: 10 },
 }));
 
 function uuidv4() {
@@ -38,7 +40,7 @@ const CartItemList = () => {
   if (processingSale) {
     return (
       <div className={classes.loadingContainer}>
-        <CircularProgress size={100} style={{ marginTop: 100 }} />
+        <CircularProgress size={100} className={classes.progress} />
       </div>
     );
   } else {
@@ -48,7 +50,7 @@ const CartItemList = () => {
           <div className={classes.container}>
             <Container className={classes.root}>
               <Grid container spacing={4}>
-                <Grid item xs={12} md={8} style={{ padding: 10 }}>
+                <Grid item xs={12} md={8} className={classes.setPadding10}>
                   {cart.map((product: IProduct) => (
                     <CartItemCard
                       key={uuidv4()}
@@ -57,7 +59,7 @@ const CartItemList = () => {
                     />
                   ))}
                 </Grid>
-                <Grid item xs={12} md={4} style={{ padding: 10 }}>
+                <Grid item xs={12} md={4} className={classes.setPadding10}>
                   <SaleSummary setProcessingSale={setProcessingSale} />
                 </Grid>
               </Grid>

@@ -5,6 +5,7 @@ import AddShoppingCartIcon from "@material-ui/icons/AddShoppingCart";
 import useReduxProducts from "../../hooks/useReduxProducts";
 import useReduxCart from "../../hooks/useReduxCart";
 import useReduxArticles from "../../hooks/useReduxArticles";
+import { checkArticleQuantityInStock, checkProductArticleStock } from "./utils";
 
 const useStyles = makeStyles((theme) => ({
   contentWrapper: {
@@ -46,7 +47,7 @@ const useStyles = makeStyles((theme) => ({
 const ProductDetails = (props: any) => {
   const classes = useStyles();
   const { products } = useReduxProducts();
-  const { addProduct } = useReduxCart();
+  const { cart, addProduct } = useReduxCart();
   const { articles } = useReduxArticles();
 
   const product = products.find((p) => p.id === props.id);
@@ -55,7 +56,6 @@ const ProductDetails = (props: any) => {
   const handleOnClick = () => {
     addProduct(product);
   };
-
   return (
     <div className={classes.contentWrapper}>
       <Container className={classes.container} role={"product-details"}>
@@ -101,13 +101,19 @@ const ProductDetails = (props: any) => {
                     </Typography>
                   </Grid>
                   <Grid item xs={12}>
-                    <Typography variant="button">
+                    <Typography
+                      variant="button"
+                      color={
+                        checkArticleQuantityInStock(article, cart, articles)
+                          ? "textPrimary"
+                          : "error"
+                      }
+                    >
                       Qty:
-                      {articles!.find(
-                        (item: { id: string }) => item.id === article.id
-                      )!.amountInStock > article.amountRequired
+                      {checkArticleQuantityInStock(article, cart, articles)
                         ? article.amountRequired + " pieces"
-                        : article.amountRequired + " (Not available in stock)"}
+                        : article.amountRequired +
+                          " (Requiered ammount not available in stock)"}
                     </Typography>
                   </Grid>
                 </div>
@@ -119,12 +125,10 @@ const ProductDetails = (props: any) => {
                 className={classes.button}
                 startIcon={<AddShoppingCartIcon />}
                 onClick={handleOnClick}
-                disabled={product.articles.some(
-                  (article) =>
-                    article.amountRequired >
-                    articles!.find(
-                      (item: { id: string }) => item.id === article.id
-                    )!.amountInStock
+                disabled={checkProductArticleStock(
+                  product.articles,
+                  cart,
+                  articles
                 )}
                 fullWidth
               >

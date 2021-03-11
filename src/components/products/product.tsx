@@ -10,6 +10,7 @@ import useReduxCart from "../../hooks/useReduxCart";
 import clsx from "clsx";
 import { IProductArticle } from "../../reducers/productReducer";
 import { IArticle } from "../../reducers/articleReducer";
+import { checkProductArticleStock, checkArticleQuantityInStock } from "./utils";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -63,7 +64,7 @@ const useStyles = makeStyles((theme) => ({
   container: { width: "100%", display: "flex" },
   requieredArticleDiv: { width: "100%", textAlign: "center" },
   rowDiv: { margin: "10px", display: "block" },
-  zeroPadding: {padding: "0px" },
+  zeroPadding: { padding: "0px" },
   fullWidth: { width: "100%" },
 }));
 type ProductProps = {
@@ -83,6 +84,7 @@ const Product: React.FC<ProductProps> = ({
 }) => {
   const classes = useStyles();
   const history = useHistory();
+  const { cart } = useReduxCart();
   const { addProduct } = useReduxCart();
 
   const handleClick = () => {
@@ -91,7 +93,6 @@ const Product: React.FC<ProductProps> = ({
   const onClickHandler = () => {
     addProduct({ id: id, name: name, articles: productArticles });
   };
-
   return (
     <Card className={classes.root} role={role}>
       <CardMedia
@@ -117,12 +118,10 @@ const Product: React.FC<ProductProps> = ({
               onClick={onClickHandler}
               size="medium"
               className={classes.zeroPadding}
-              disabled={productArticles.some(
-                (article) =>
-                  article.amountRequired >
-                  articles!.find(
-                    (item: { id: string }) => item.id === article.id
-                  )!.amountInStock
+              disabled={checkProductArticleStock(
+                productArticles,
+                cart,
+                articles
               )}
             >
               <AddShoppingCartIcon className={classes.icon} />
@@ -162,10 +161,14 @@ const Product: React.FC<ProductProps> = ({
               variant="button"
               component="h3"
               className={clsx(classes.h3ResponsiveText)}
+              color={
+                checkArticleQuantityInStock(article, cart, articles)
+                  ? "textPrimary"
+                  : "error"
+              }
             >
               Qty:
-              {articles!.find((item: { id: string }) => item.id === article.id)!
-                .amountInStock > article.amountRequired
+              {checkArticleQuantityInStock(article, cart, articles)
                 ? article.amountRequired + " pieces"
                 : article.amountRequired + " (Not available in stock)"}
             </Typography>

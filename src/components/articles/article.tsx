@@ -77,8 +77,16 @@ const Article: React.FC<ArticleProps> = ({ role, name, amountInStock }) => {
         variant="button"
         component="h3"
         className={[classes.h3ResponsiveText, classes.marginLeft].join(" ")}
+        color={
+          amountInStock !== undefined && amountInStock > 0
+            ? "textPrimary"
+            : "error"
+        }
       >
-        Available Qty: {amountInStock}
+        Available Qty:{" "}
+        {amountInStock !== undefined && amountInStock > 0
+          ? amountInStock + " pieces"
+          : amountInStock + " (Not available in stock)"}
       </Typography>
     </Card>
   );
